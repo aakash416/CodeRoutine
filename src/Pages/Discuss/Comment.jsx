@@ -196,7 +196,7 @@ const Comment = (props) => {
                         justifyContent: "flex-end", // Align buttons to the right
                         marginTop: "8px",
                         gap: "8px", // Adjust spacing between buttons
-                      }}
+                      }}>
 
 
                         <Button
