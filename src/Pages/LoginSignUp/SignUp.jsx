@@ -70,6 +70,9 @@ export default function SignUp() {
     email: "",
   });
   const [isLoading, setIsLoading] = React.useState(false);
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Sign Up";
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -72,7 +72,6 @@ const App = () => {
             <Route path="/discuss" element={<Discuss />} />
             <Route path="/discuss/:id" element={<DiscussDetails />} />
             <Route path="/interview/assessment" element={<Assessment />} />
-            <Route path="/discuss/:id" element={<DiscussDetails />} />
             <Route
               path="/interview/onlineinterview"
               element={<InterviewOnline />}
@@ -81,7 +80,6 @@ const App = () => {
             <Route path="/courses/add" element={<CreateCourse />} />
             <Route path="/courses/:id" element={<CourseDetailPage />} />
             <Route path="/progress" element={<ProgressPage />} />
-
           </Routes>
         </BrowserRouter>
       </Store>

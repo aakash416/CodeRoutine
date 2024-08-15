@@ -40,6 +40,9 @@ const testimonials = [
 ];
 
 const Premium = () => {
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Premium";
+  }, []);
   return (
     <>
       <Box

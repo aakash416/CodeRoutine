@@ -33,6 +33,9 @@ const AddProblem = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Add Problem";
+  }, []);
 
   useEffect(() => {
     const isFormFilled = Object.values(problemData).every((value) =>

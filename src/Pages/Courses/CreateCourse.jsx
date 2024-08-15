@@ -14,6 +14,9 @@ import TopicForm from "./TopicForm";
 import { useNavigate } from "react-router-dom";
 
 const CreateCourse = () => {
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Create Course";
+  }, []);
   const [courseData, setCourseData] = useState({
     title: "",
     description: "",

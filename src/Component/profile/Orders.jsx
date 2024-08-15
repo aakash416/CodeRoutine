@@ -33,6 +33,9 @@ const orders = [
 ];
 
 const Orders = () => {
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Orders";
+  }, []);
   return (
     <Container>
       <Box display="flex" alignItems="center" mb={2}>

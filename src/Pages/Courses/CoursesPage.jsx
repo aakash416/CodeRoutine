@@ -4,6 +4,9 @@ import CourseList from "./components/CourseList";
 import { useNavigate } from "react-router-dom";
 
 const CoursesPage = () => {
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Courses";
+  }, []);
   const navigate = useNavigate();
 
   return (

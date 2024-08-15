@@ -1,6 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import SyncLockIcon from '@mui/icons-material/SyncLock';
+import SyncLockIcon from "@mui/icons-material/SyncLock";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -18,8 +18,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import Skeleton from "@mui/material/Skeleton";
 import { ContextStore } from "../../Context/ContextStore";
 import { Container } from "@mui/material";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { getAllQuestionsData } from "../../Api/problemApi";
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -59,6 +60,11 @@ function EnhancedTableHead(props) {
     rowCount,
     onRequestSort,
   } = props;
+  // updated page title
+
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Problems";
+  }, []);
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -72,8 +78,8 @@ function EnhancedTableHead(props) {
         <TableCell>Acceptance</TableCell>
         <TableCell>Difficulty</TableCell>
         <TableCell>Frequency</TableCell>
-        {userData?.role === 'admin' && <TableCell />}
-        {userData?.role === 'admin' && <TableCell />}
+        {userData?.role === "admin" && <TableCell />}
+        {userData?.role === "admin" && <TableCell />}
       </TableRow>
     </TableHead>
   );
@@ -166,7 +172,6 @@ export default function Problems() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - questions.length) : 0;
 
   const SkeletonTable = () => (
-
     <>
       {Array.from({ length: rowsPerPage }, (_, index) => (
         <TableRow key={index}>
@@ -193,8 +198,8 @@ export default function Problems() {
           <TableCell>
             <Skeleton animation="wave" variant="text" />
           </TableCell>
-          {userData?.role === 'admin' && <TableCell />}
-          {userData?.role === 'admin' && <TableCell />}
+          {userData?.role === "admin" && <TableCell />}
+          {userData?.role === "admin" && <TableCell />}
         </TableRow>
       ))}
       {emptyRows > 0 && (
@@ -270,23 +275,25 @@ export default function Problems() {
                               <PlayCircleIcon />
                             </Link>
                           </TableCell>
-                          <TableCell>{Math.floor(Math.random() * 71) + 30}%</TableCell>
+                          <TableCell>
+                            {Math.floor(Math.random() * 71) + 30}%
+                          </TableCell>
                           <TableCell
                             style={{
                               color:
                                 row.difficulty === "Easy"
                                   ? "#357a38"
                                   : row.difficulty === "Hard"
-                                    ? "#f44336"
-                                    : "#ffc107",
+                                  ? "#f44336"
+                                  : "#ffc107",
                             }}
                           >
                             {row.difficulty}
                           </TableCell>
-                          <TableCell style={{ color: "#357a38" }} >
+                          <TableCell style={{ color: "#357a38" }}>
                             <SyncLockIcon />
                           </TableCell>
-                          {userData?.role === 'admin' && (
+                          {userData?.role === "admin" && (
                             <TableCell>
                               <Link
                                 component={CombinedLink}
@@ -297,7 +304,7 @@ export default function Problems() {
                               </Link>
                             </TableCell>
                           )}
-                          {userData?.role === 'admin' && (
+                          {userData?.role === "admin" && (
                             <TableCell>
                               <Link
                                 component={CombinedLink}
@@ -335,8 +342,6 @@ export default function Problems() {
           />
         </Paper>
       </Box>
-
-    </ Container>
-
+    </Container>
   );
 }

@@ -12,6 +12,9 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import { data } from "./data.js";
 
 const Assessment = () => {
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Assessment";
+  }, []);
   return (
     <Container sx={{ mt: 5, backgroundColor: "#fafafa", p: 3 }}>
       <Typography variant="h3" component="h1" sx={{ mt: 8 }}>
@@ -41,40 +44,38 @@ const Assessment = () => {
           </Button>
         </Grid>
       </Grid>
-        {data.map((info, index) => (
-          <Box
-            key={index}
-            sx={{
-              mt: 4,
-              p: 3,
-              boxShadow: 3,
-              backgroundColor: "#fff",
-              borderRadius: 2,
-            }}
-          >
-            <Typography variant="subtitle1" component="h3">
-              {info.heading}
-            </Typography>
-            <Typography variant="h5" component="h4" sx={{ mt: 2, mb: 3 }}>
-              {info.subHeading}
-            </Typography>
-            <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
-              <PeopleIcon sx={{ mr: 1 }} />
-              <Typography variant="body1">
-                ATTEMPTED: {info.ATTEMPTED}
-              </Typography>
-            </Box>
-            <Box display="flex" alignItems="center" sx={{ mb: 4 }}>
-              <BarChartIcon sx={{ mr: 1 }} />
-              <Typography variant="body1">
-                SUCCESS RATE: {info.SUCCESS}
-              </Typography>
-            </Box>
-            <Button variant="contained" color="primary">
-              Start
-            </Button>
+      {data.map((info, index) => (
+        <Box
+          key={index}
+          sx={{
+            mt: 4,
+            p: 3,
+            boxShadow: 3,
+            backgroundColor: "#fff",
+            borderRadius: 2,
+          }}
+        >
+          <Typography variant="subtitle1" component="h3">
+            {info.heading}
+          </Typography>
+          <Typography variant="h5" component="h4" sx={{ mt: 2, mb: 3 }}>
+            {info.subHeading}
+          </Typography>
+          <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
+            <PeopleIcon sx={{ mr: 1 }} />
+            <Typography variant="body1">ATTEMPTED: {info.ATTEMPTED}</Typography>
           </Box>
-        ))}
+          <Box display="flex" alignItems="center" sx={{ mb: 4 }}>
+            <BarChartIcon sx={{ mr: 1 }} />
+            <Typography variant="body1">
+              SUCCESS RATE: {info.SUCCESS}
+            </Typography>
+          </Box>
+          <Button variant="contained" color="primary">
+            Start
+          </Button>
+        </Box>
+      ))}
     </Container>
   );
 };

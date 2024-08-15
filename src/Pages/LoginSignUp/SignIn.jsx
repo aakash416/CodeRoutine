@@ -110,6 +110,10 @@ export default function SignIn() {
     }
   };
 
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Sign In";
+  }, []);
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">

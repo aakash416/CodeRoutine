@@ -8,6 +8,9 @@ const CreateCourse = () => {
     description: "",
     topics: [],
   });
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Create Course";
+  }, []);
 
   const handleChange = (e) => {
     setCourseData({ ...courseData, [e.target.name]: e.target.value });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -35,6 +35,12 @@ function Home() {
     setSearchQuery(event.target.value);
     console.log(event.target.value);
   };
+  
+  // updated page title
+
+  useEffect(() => {
+    document.title = "CodeRoutine | Home";
+  }, []);
 
   return (
     <>
@@ -134,7 +140,11 @@ function Home() {
           <Grid container spacing={4} justifyContent="center">
             {cards.map((card) => (
               <Grid item key={card.id} xs={12} sm={6} md={3}>
-                <Link component={CombinedLink} to="/underconstruction" underline="none">
+                <Link
+                  component={CombinedLink}
+                  to="/underconstruction"
+                  underline="none"
+                >
                   <Card>
                     <CardActionArea>
                       <CardMedia

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Box, Typography, Grid } from "@mui/material";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import CopyRight from "./CopyRight/CopyRight";
 
 function UnderConstruction() {
+  useEffect(() => {
+    document.title = "CodeRoutine | UnderConstruction";
+  }, []);
   return (
     <React.Fragment>
       <Container maxWidth="lg">

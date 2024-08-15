@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Box,
@@ -17,6 +16,10 @@ import {
 function InterviewOnline() {
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
+
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Interview Online";
+  }, []);
 
   const handleClickOpen = (newContent) => {
     setContent(newContent);

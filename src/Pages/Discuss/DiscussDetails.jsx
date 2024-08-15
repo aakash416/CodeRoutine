@@ -21,7 +21,11 @@ import { ContextStore } from "../../Context/ContextStore";
 import Comment from "./Comment";
 import IsLogin from "../../Component/IsLogin";
 import TopicLoadig from "./Loading/TopicLoadig";
-import { addLikeOrRemoveLike, deleteDiscussById, getDiscussById } from "../../Api/Discuss/discussApi";
+import {
+  addLikeOrRemoveLike,
+  deleteDiscussById,
+  getDiscussById,
+} from "../../Api/Discuss/discussApi";
 import { addCommentToTopic } from "../../Api/Discuss/commentApi";
 
 const DiscussDetails = () => {
@@ -36,6 +40,10 @@ const DiscussDetails = () => {
 
   const navigate = useNavigate();
   const { userData } = ContextStore();
+
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Discuss Details";
+  }, []);
 
   useEffect(() => {
     const fetchTopic = async () => {

@@ -52,6 +52,9 @@ const getCuteAvatar = (author) => {
 };
 
 export default function Contest() {
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Contest";
+  }, []);
   return (
     <Grid
       container
@@ -65,7 +68,8 @@ export default function Contest() {
       <Box
         sx={{
           color: "white",
-          background: "radial-gradient(circle, rgba(74,74,74,1) 0%, rgba(5,5,5,1) 100%)",
+          background:
+            "radial-gradient(circle, rgba(74,74,74,1) 0%, rgba(5,5,5,1) 100%)",
           height: "65vh",
           display: "flex",
           flexDirection: "column",
@@ -126,25 +130,27 @@ export default function Contest() {
             color: "white",
           }}
         >
-          {[WeeklyContest291, BiweeklyContest, Contest200].map((image, index) => (
-            <Box key={index} sx={{ maxWidth: 345 }}>
-              <CardMedia
-                component="img"
-                height="180"
-                image={image}
-                alt={`Weekly Contest ${index + 291}`}
-                sx={{ borderRadius: "10px" }}
-              />
-              <Box sx={{ color: "white", mt: 1 }}>
-                <Typography gutterBottom variant="h6">
-                  Weekly Contest {index + 291}
-                </Typography>
-                <Typography variant="body2" color="#eff1f6bf">
-                  Sunday 8:00 AM IST
-                </Typography>
+          {[WeeklyContest291, BiweeklyContest, Contest200].map(
+            (image, index) => (
+              <Box key={index} sx={{ maxWidth: 345 }}>
+                <CardMedia
+                  component="img"
+                  height="180"
+                  image={image}
+                  alt={`Weekly Contest ${index + 291}`}
+                  sx={{ borderRadius: "10px" }}
+                />
+                <Box sx={{ color: "white", mt: 1 }}>
+                  <Typography gutterBottom variant="h6">
+                    Weekly Contest {index + 291}
+                  </Typography>
+                  <Typography variant="body2" color="#eff1f6bf">
+                    Sunday 8:00 AM IST
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-          ))}
+            )
+          )}
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <TableContainer
@@ -233,12 +239,17 @@ export default function Contest() {
                 </ListItemAvatar>
                 <Box>
                   <Typography>{data.name}</Typography>
-                  <Typography sx={{ display: "flex", color: "#eff2f699" }} gap={2}>
+                  <Typography
+                    sx={{ display: "flex", color: "#eff2f699" }}
+                    gap={2}
+                  >
                     <Typography>
-                      Rating: <span style={{ color: "white" }}>{data.Rating}</span>
+                      Rating:{" "}
+                      <span style={{ color: "white" }}>{data.Rating}</span>
                     </Typography>
                     <Typography>
-                      Attended: <span style={{ color: "white" }}>{data.Attended}</span>
+                      Attended:{" "}
+                      <span style={{ color: "white" }}>{data.Attended}</span>
                     </Typography>
                   </Typography>
                 </Box>

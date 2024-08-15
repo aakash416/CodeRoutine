@@ -14,6 +14,9 @@ import StarsIcon from "@mui/icons-material/Stars";
 import { data } from "../Store/Config.js";
 
 export default function Redeem() {
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Redeem";
+  }, []);
   return (
     <Grid
       sx={{
@@ -155,7 +158,10 @@ export default function Redeem() {
         }}
       >
         {data.map((storeData, index) => (
-          <Card key={index} sx={{ m: 5, boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}>
+          <Card
+            key={index}
+            sx={{ m: 5, boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+          >
             <CardMedia
               component="img"
               height="300px"

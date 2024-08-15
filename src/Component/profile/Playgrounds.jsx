@@ -6,6 +6,9 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Avatar, Button, Grid, Stack } from "@mui/material";
 
 export default function Playgrounds() {
+  React.useEffect(() => {
+    document.title = "CodeRoutine | Playgrounds";
+  }, []);
   return (
     <Grid
       sx={{
