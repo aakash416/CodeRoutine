@@ -15,9 +15,26 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
+  IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import ErrorIcon from "@mui/icons-material/Error";
+import ShareIcon from "@mui/icons-material/Share";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+  WhatsappShareButton,
+  EmailShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  LinkedinIcon,
+  WhatsappIcon,
+  EmailIcon,
+} from "react-share";
+
 import { useDispatch, useSelector } from "react-redux";
 import { ContextStore } from "../../Context/ContextStore";
 import SaveJobBookMark from "./components/SaveJobBookMark";
@@ -43,6 +60,16 @@ const JobDetails = () => {
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const [open, setOpen] = useState(false);
+
+  // Share menu state
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openShareMenu = Boolean(anchorEl);
+  const handleShareClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleShareClose = () => {
+    setAnchorEl(null);
+  };
 
   React.useEffect(() => {
     document.title = "CodeRoutine | Job Details";
@@ -89,6 +116,9 @@ const JobDetails = () => {
     return deadlineDate.getTime() > currentDate.getTime();
   };
 
+  const shareUrl = window.location.href;
+  const title = job?.title;
+
   return (
     <Container
       maxWidth="md"
@@ -117,15 +147,64 @@ const JobDetails = () => {
           },
         }}
       >
-        <Typography
-          variant="h4"
-          component="h1"
-          gutterBottom
-          sx={{ fontWeight: "bold", color: "primary.main" }}
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          marginTop={-4}
+          marginRight={2}
         >
-          {job?.title}
-        </Typography>
-        <SaveJobBookMark jobId={job?._id} />
+          <Typography
+            variant="h4"
+            component="h1"
+            gutterBottom
+            sx={{ fontWeight: "bold", color: "primary.main" }}
+          >
+            {title}
+          </Typography>
+          <IconButton onClick={handleShareClick}>
+            <ShareIcon />
+          </IconButton>
+
+          <Menu
+            anchorEl={anchorEl}
+            open={openShareMenu}
+            onClose={handleShareClose}
+            PaperProps={{
+              style: {
+                padding: "10px",
+                marginTop: "5px",
+              },
+            }}
+            transformOrigin={{
+              horizontal: "right", // Adjust the origin for better positioning
+            }}
+            anchorOrigin={{
+              horizontal: "right", // Align the menu better within the container
+              vertical: "bottom",
+            }}
+          >
+            <Box display="flex" flexDirection="row" alignItems="center" gap={1}>
+              <FacebookShareButton url={shareUrl} title={title}>
+                <FacebookIcon size={32} round />
+              </FacebookShareButton>
+              <TwitterShareButton url={shareUrl} title={title}>
+                <TwitterIcon size={32} round />
+              </TwitterShareButton>
+              <LinkedinShareButton url={shareUrl} title={title}>
+                <LinkedinIcon size={32} round />
+              </LinkedinShareButton>
+              <WhatsappShareButton url={shareUrl} title={title}>
+                <WhatsappIcon size={32} round />
+              </WhatsappShareButton>
+              <EmailShareButton url={shareUrl} subject={title}>
+                <EmailIcon size={32} round />
+              </EmailShareButton>
+            </Box>
+          </Menu>
+
+          <SaveJobBookMark jobId={job?._id} />
+        </Box>
 
         {job?.applicationDeadline && !JobExpiry(job?.applicationDeadline) && (
           <Box display="flex" gap={1} color="error.main" alignItems="center">
