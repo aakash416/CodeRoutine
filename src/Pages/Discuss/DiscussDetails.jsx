@@ -28,6 +28,37 @@ import {
 } from "../../Api/Discuss/discussApi";
 import { addCommentToTopic } from "../../Api/Discuss/commentApi";
 
+const CommentSection = ({ comments, setTopic, topicId }) => {
+  return (
+    <Box mt={2} gap={1}>
+      <Box display="flex" alignItems="center" gap={1}>
+        <CommentIcon fontSize="small" color="action" aria-label="comment" />
+        <Typography variant="body2" color="gray">
+          Comments: {comments.length}
+        </Typography>
+      </Box>
+      {comments.length === 0 ? (
+        <Typography variant="body2" color="gray">
+          No comments yet! 😢
+        </Typography>
+      ) : (
+        <List>
+          {comments
+            .map((comment) => (
+              <Comment
+                key={comment._id}
+                comment={comment}
+                topicId={topicId}
+                setTopic={setTopic}
+              />
+            ))
+            .reverse()}
+        </List>
+      )}
+    </Box>
+  );
+};
+
 const DiscussDetails = () => {
   const { id } = useParams();
   const [topic, setTopic] = useState(null);
@@ -36,127 +67,80 @@ const DiscussDetails = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [loginDialogOpen, setLoginDialogOpen] = useState(false); // New state
   const [isLiked, setIsLiked] = useState(null);
-  const [likeorComment, setisLikeorComment] = useState(null);
-
+  const [likeorComment, setLikeorComment] = useState("");
+  const {
+    state: { user },
+  } = React.useContext(ContextStore);
   const navigate = useNavigate();
-  const { userData } = ContextStore();
 
-  React.useEffect(() => {
-    document.title = "CodeRoutine | Discuss Details";
-  }, []);
   useEffect(() => {
+    // Fetch topic by ID
     const fetchTopic = async () => {
       try {
         const response = await getDiscussById(id);
-        setTopic(response.data);
-        setUpdate(response.data);
+        setTopic(response);
+        setIsLiked(response.isLiked);
       } catch (error) {
-        console.error("Error fetching topic:", error);
+        console.error("Failed to fetch topic:", error);
       }
     };
-
     fetchTopic();
   }, [id]);
 
-  useEffect(() => {
-    if (topic) {
-      setIsLiked(topic?.likes?.includes(userData?._id));
-    }
-  }, [topic, userData]);
-
-  const handleDelete = async () => {
-    try {
-      await deleteDiscussById(id);
-      navigate("/discuss");
-    } catch (error) {
-      console.error("Error deleting topic:", error);
-    }
-  };
-
-  const handleAddComment = async () => {
-    try {
-      if (!userData) {
-        // Check if user is logged in
-        setisLikeorComment("If you want write comment,then please Login");
-        setLoginDialogOpen(true); // Open login dialog
-        return; // Exit function to prevent further execution
-      }
-
-      const response = await addCommentToTopic(id, {
-        content: newComment,
-      });
-      if (response && response.data) {
-        const newCommentData = {
-          ...response.data.comment,
-          author: {
-            _id: userData?._id,
-            userName: userData?.userName,
-          },
-        };
-        const updatedComments = [...(topic?.comments || []), newCommentData];
-        setTopic((prevTopic) => ({
-          ...prevTopic,
-          comments: updatedComments,
-        }));
-      }
-      setNewComment("");
-    } catch (error) {
-      console.error("Error adding comment:", error);
-      // Handle error scenarios here
-    }
-  };
-
   const handleLike = async () => {
-    if (!userData) {
-      // Check if user is logged in
-      setisLikeorComment("If you want to like,then please Login");
-      setLoginDialogOpen(true); // Open login dialog
+    if (!user) {
+      setLikeorComment("Please log in to like or comment.");
+      setLoginDialogOpen(true);
       return;
     }
-
-    const userId = userData?._id;
     try {
       const response = await addLikeOrRemoveLike(id);
-      const userLikes = topic?.likes.includes(userId);
-      if (response && response.data) {
-        if (!userLikes) {
-          setTopic((prevTopic) => ({
-            ...prevTopic,
-            likes: [...(topic?.likes || []), userId],
-          }));
-          setIsLiked(true);
-        } else {
-          setTopic((prevTopic) => ({
-            ...prevTopic,
-            likes: prevTopic.likes.filter((like) => like !== userId),
-          }));
-          setIsLiked(false);
-        }
-      } else {
-        console.error("Invalid response data:", response);
-      }
+      setTopic((prevTopic) => ({
+        ...prevTopic,
+        likes: response.likes,
+      }));
+      setIsLiked(!isLiked);
     } catch (error) {
-      console.error("Error liking/unliking topic:", error);
+      console.error("Failed to like/unlike topic:", error);
     }
   };
 
-  const handleOpenDialog = () => {
-    setOpenDialog(true);
+  const handleDelete = async () => {
+    if (!user) {
+      setLikeorComment("Please log in to delete.");
+      setLoginDialogOpen(true);
+      return;
+    }
+    try {
+      await deleteDiscussById(id);
+      navigate("/discussions"); // Navigate to discussions list after deletion
+    } catch (error) {
+      console.error("Failed to delete topic:", error);
+    }
   };
 
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
+  const handleCommentChange = (event) => setNewComment(event.target.value);
 
-  const handleContentChange = (value) => {
-    setUpdate({
-      ...update,
-      content: value,
-    });
+  const handleAddComment = async () => {
+    if (!user) {
+      setLikeorComment("Please log in to add a comment.");
+      setLoginDialogOpen(true);
+      return;
+    }
+    try {
+      const response = await addCommentToTopic(id, newComment);
+      setTopic((prevTopic) => ({
+        ...prevTopic,
+        comments: [response, ...prevTopic.comments],
+      }));
+      setNewComment("");
+    } catch (error) {
+      console.error("Failed to add comment:", error);
+    }
   };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 5, minHeight:"100vh"}} >
+    <Container maxWidth="lg" sx={{ mt: 5, minHeight: "100vh" }}>
       {!topic ? (
         <TopicLoadig />
       ) : (
@@ -164,175 +148,88 @@ const DiscussDetails = () => {
           <Typography variant="h5" mb={2}>
             {topic.title}
           </Typography>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="flex-start"
-            gap={1}
-          >
+          <Box display="flex" alignItems="center" gap={2} mb={2}>
             <Avatar
-              alt={topic?.author?.userName}
-              src={getCuteAvatar(topic?.author?.userName)}
-              onClick={() => navigate(`/profile/${topic?.author?.userName}`)}
-              aria-label="author"
-              sx={{
-                width: 30,
-                height: 30,
-                borderRadius: "50%",
-                cursor: "pointer",
-                "&:hover": {
-                  backgroundColor: "rgba(0,0,0,0.1)",
-                },
-              }}
+              alt={topic.author.name}
+              src={getCuteAvatar(topic.author.avatar)}
             />
-            <Typography
-              variant="body2"
-              color="gray"
-              onClick={() => navigate(`/profile/${topic?.author?.userName}`)}
-              sx={{
-                cursor: "pointer",
-                "&:hover": {
-                  color: "primary.main",
-                },
-              }}
-            >
-              {topic?.author?.userName}
-            </Typography>
-            <ThumbUpIcon
-              cursor="pointer"
+            <Box>
+              <Typography variant="body1" fontWeight="bold">
+                {topic.author.name}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {new Date(topic.createdAt).toLocaleDateString()}
+              </Typography>
+            </Box>
+          </Box>
+          <Typography variant="body1" paragraph>
+            {topic.content}
+          </Typography>
+          <Box display="flex" alignItems="center" gap={2} mb={2}>
+            <Button
+              variant={isLiked ? "contained" : "outlined"}
+              color="primary"
+              startIcon={<ThumbUpIcon />}
               onClick={handleLike}
-              fontSize="small"
-              sx={{
-                color: isLiked ? "#0247FE" : "gray",
-                "&:hover": {
-                  color: isLiked ? "gray" : "#0247FE",
-                },
-              }}
-              color="action"
-              aria-label="like"
-            />
-            <Typography variant="body2" color="gray">
-              {topic?.likes?.length > 0 && topic?.likes?.length}
-            </Typography>
-            {userData?._id === topic?.author?._id && (
+            >
+              {isLiked ? "Unlike" : "Like"} ({topic.likes.length})
+            </Button>
+            {user && (
               <>
-                <EditIcon
-                  onClick={handleOpenDialog}
-                  fontSize="small"
-                  aria-label="edit"
-                  cursor="pointer"
-                  sx={{
-                    color: "green",
-                    "&:hover": {
-                      color: "blue",
-                    },
-                  }}
-                  color="action"
-                />
-                <DeleteOutlineIcon
+                <Button
+                  variant="outlined"
+                  startIcon={<EditIcon />}
+                  onClick={() => setOpenDialog(true)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  startIcon={<DeleteOutlineIcon />}
                   onClick={handleDelete}
-                  fontSize="small"
-                  aria-label="delete"
-                  cursor="pointer"
-                  sx={{
-                    color: "red",
-                    "&:hover": {
-                      color: "orange",
-                    },
-                  }}
-                  color="action"
-                />
+                >
+                  Delete
+                </Button>
               </>
             )}
           </Box>
-
-          <Typography variant="body2" color="gray" mt={2} component={"div"}>
-            <div dangerouslySetInnerHTML={{ __html: topic.content }} />
-          </Typography>
-
-          <Box mt={2} gap={1}>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-start"
-              gap={1}
-            >
-              <CommentIcon
-                fontSize="small"
-                color="action"
-                aria-label="comment"
-                cursor="pointer"
-                sx={{
-                  color: "blue",
-                }}
-              />
-              <Typography variant="body2" color="gray">
-                Comments: {topic?.comments?.length}
-              </Typography>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="flex-end"
-              flexDirection="column"
-              gap={1}
-              mt={1}
-            >
-              <TextField
-                value={newComment}
-                fullWidth
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder="Type comment here..."
-                multiline
-                rows={2}
-                variant="outlined"
-                aria-label="comment"
-              />
-              <Button
-                onClick={handleAddComment}
-                variant="contained"
-                color="primary"
-                size="small"
-                aria-label="add comment"
-                sx={{
-                  color: "white",
-                }}
-                disabled={!newComment.trim()}
-                startIcon={<SendIcon fontSize="small" />}
-              >
-                Post
-              </Button>
-            </Box>
-          </Box>
-
-          {topic?.comments?.length === 0 ? (
-            <Typography variant="body2" color="gray">
-              No comments yet ! 😢
-            </Typography>
-          ) : (
-            <List>
-              {topic?.comments
-                ?.map((comment) => (
-                  <Comment
-                    key={comment._id}
-                    comment={comment}
-                    topicId={topic?._id}
-                    setTopic={setTopic}
-                  />
-                ))
-                .reverse()}
-            </List>
-          )}
-
           <DiscussEdit
             openDialog={openDialog}
             update={update}
             setUpdate={setUpdate}
-            handleCloseDialog={handleCloseDialog}
-            handleContentChange={handleContentChange}
+            handleCloseDialog={() => setOpenDialog(false)}
+            handleContentChange={(e) =>
+              setUpdate({ ...update, content: e.target.value })
+            }
             setTopic={setTopic}
             setOpenDialog={setOpenDialog}
           />
-
+          <CommentSection
+            comments={topic.comments}
+            setTopic={setTopic}
+            topicId={topic._id}
+          />
+          <Box mt={2}>
+            <TextField
+              fullWidth
+              label="Add a comment"
+              value={newComment}
+              onChange={handleCommentChange}
+              variant="outlined"
+              multiline
+              rows={3}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<SendIcon />}
+              onClick={handleAddComment}
+              sx={{ mt: 1 }}
+            >
+              Post
+            </Button>
+          </Box>
           <IsLogin
             setLoginDialogOpen={setLoginDialogOpen}
             loginDialogOpen={loginDialogOpen}

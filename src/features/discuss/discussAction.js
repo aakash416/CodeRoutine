@@ -1,4 +1,3 @@
-// src/store/actions/discussAction.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axiosInstance from "../../Api/axiosConfig";
@@ -26,3 +25,61 @@ export const fetchDiscussions = createAsyncThunk(
     }
 );
 
+export const addLikeOrRemoveLike = createAsyncThunk(
+    "discussions/addLikeOrRemoveLike",
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.put(
+                `/api/discuss/topics/${id}/like`
+            );
+            toast.success(response.data.message);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            return handleThunkError(error, rejectWithValue);
+        }
+    }
+);
+
+export const getDiscussById = createAsyncThunk(
+    "discussions/getDiscussionById",
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.get(`/api/discuss/${id}`);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            return handleThunkError(error, rejectWithValue);
+        }
+    }
+);
+
+export const deleteDiscussById = createAsyncThunk(
+    "discussions/deleteDiscussById",
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.delete(`/api/discuss/${id}`);
+            toast.success(response.data.message);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            return handleThunkError(error, rejectWithValue);
+        }
+    }
+);
+
+export const addLikeOrRemoveLikeComment = createAsyncThunk(
+    "discussions/addLikeOrRemoveLikeComment",
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.put(
+                `/api/discuss/comments/${id}/like`
+            );
+            toast.success(response.data.message);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            return handleThunkError(error, rejectWithValue);
+        }
+    }
+);
