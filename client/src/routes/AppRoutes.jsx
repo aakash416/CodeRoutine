@@ -32,6 +32,8 @@ import Hiretalent from "../Pages/Jobs/HireTalent/Hiretalent";
 import Dashboard from "../Pages/Courses/Instructor/Dashboard";
 import Protalent from "../Pages/ProblemList/Protalent/Protalent";
 import AdminRoute from "../Config/AdminRoute";
+import CourseAdminRoute from "../Config/CourseAdminRoute";
+import InstructorSignup from "../Pages/Courses/Instructor/Pages/InstructorSignup";
 
 const AppRoutes = () => {
   return (
@@ -81,12 +83,13 @@ const AppRoutes = () => {
       <Route
         path="/courses/instructor/*"
         element={
-          <AdminRoute>
+          <CourseAdminRoute>
             <Dashboard />
-          </AdminRoute>
+          </CourseAdminRoute>
         }
       />
       <Route path="/progress" element={<ProgressPage />} />
+      <Route path="/courses/instructor/signup" element={<InstructorSignup />} />
     </Routes>
   );
 };
