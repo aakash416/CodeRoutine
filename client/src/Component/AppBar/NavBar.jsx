@@ -346,11 +346,13 @@ function NavBar() {
                 onClose={handleCloseUserMenu}
               >
                 {settings
-                  .filter((setting) => {
-                    setting.name === "Dashboard" && userData.role !== "admin"
-                      ? false
-                      : true;
-                  })
+                  .filter(
+                    (setting) =>
+                      !(
+                        setting.name === "Dashboard" &&
+                        userData.role !== "admin"
+                      )
+                  )
                   .map((setting) => (
                     <MenuItem
                       key={setting.name}
