@@ -1,16 +1,37 @@
 import React from "react";
 import { Box } from "@mui/material";
-import Sidebar from "./component/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import VirtualHiring from "./pages/VirtualHiring";
 import CampusHiring from "./pages/CampusHiring";
 import { Route, Routes } from "react-router-dom";
+import SideNavbar from "../../../Component/Shared/SideNavbar";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import WorkIcon from "@mui/icons-material/Work";
+import SchoolIcon from "@mui/icons-material/School";
 
 function Hiretalent() {
+  const sideMenu = [
+    {
+      name: "Home",
+      icon: <DashboardIcon />,
+      link: "/jobs/hiretalent",
+    },
+    {
+      name: "Virtual Hiring",
+      icon: <WorkIcon />,
+      link: "/jobs/hiretalent/virtual-hiring",
+    },
+    {
+      name: "Schedule",
+      icon: <SchoolIcon />,
+      link: "/jobs/hiretalent/campus-hiring",
+    },
+  ];
+
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
       {/* Sidebar */}
-      <Sidebar />
+      <SideNavbar sideMenu={sideMenu} />
 
       {/* Main Content Area */}
       <Box
