@@ -8,15 +8,12 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import WorkIcon from "@mui/icons-material/Work";
-import SchoolIcon from "@mui/icons-material/School";
-import HomeIcon from "@mui/icons-material/Home";
+
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link } from "react-router-dom";
 
-const Sidebar = () => {
+const SideNavbar = ({ sideMenu }) => {
   const [open, setOpen] = useState(false); // State to manage sidebar visibility
 
   const toggleSidebar = () => {
@@ -39,29 +36,6 @@ const Sidebar = () => {
       window.removeEventListener("resize", handleResize); // Cleanup listener on unmount
     };
   }, []);
-
-  const sideMenu = [
-    {
-      name: "Home",
-      icon: <HomeIcon />,
-      link: "/courses/instructor",
-    },
-    {
-      name: "All Courses",
-      icon: <WorkIcon />,
-      link: "/courses/instructor/all",
-    },
-    {
-      name: "Tasks",
-      icon: <WorkIcon />,
-      link: "/courses/instructor/tasks",
-    },
-    {
-      name: "Schedule",
-      icon: <SchoolIcon />,
-      link: "/courses/instructor/schedule",
-    },
-  ];
 
   return (
     <Box
@@ -133,4 +107,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SideNavbar;

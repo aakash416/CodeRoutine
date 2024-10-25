@@ -1,16 +1,29 @@
 import React from "react";
 import { Box } from "@mui/material";
-
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard";
-import Sidebar from "./Components/Sidebar";
 import AllProblems from "./Pages/AllProblems";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import WorkIcon from "@mui/icons-material/Work";
+import SideNavbar from "../../../Component/Shared/SideNavbar";
 
 function Protalent() {
+  const sideMenu = [
+    {
+      name: "Dashboard",
+      icon: <DashboardIcon />,
+      link: "/problems/protalent",
+    },
+    {
+      name: "AllProblems",
+      icon: <WorkIcon />,
+      link: "/problems/protalent/all-problems",
+    },
+  ];
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
       {/* Sidebar */}
-      <Sidebar />
+      <SideNavbar sideMenu={sideMenu} />
 
       {/* Main Content Area */}
       <Box

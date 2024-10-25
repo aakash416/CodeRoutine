@@ -1,16 +1,41 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Sidebar from "./Components/Sidebar";
 import Home from "./Pages/Home";
 import Courses from "./Pages/Courses";
 import Tasks from "./Pages/Tasks";
 import Schedule from "./Pages/Schedule";
+import SideNavbar from "../../../Component/Shared/SideNavbar";
+import WorkIcon from "@mui/icons-material/Work";
+import SchoolIcon from "@mui/icons-material/School";
+import HomeIcon from "@mui/icons-material/Home";
 
 const Dashboard = () => {
+  const sideMenu = [
+    {
+      name: "Home",
+      icon: <HomeIcon />,
+      link: "/courses/instructor",
+    },
+    {
+      name: "All Courses",
+      icon: <WorkIcon />,
+      link: "/courses/instructor/all",
+    },
+    {
+      name: "Tasks",
+      icon: <WorkIcon />,
+      link: "/courses/instructor/tasks",
+    },
+    {
+      name: "Schedule",
+      icon: <SchoolIcon />,
+      link: "/courses/instructor/schedule",
+    },
+  ];
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
-      <Sidebar />
+      <SideNavbar sideMenu={sideMenu} />
       <Box
         component="main"
         sx={{
