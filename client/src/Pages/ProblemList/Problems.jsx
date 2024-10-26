@@ -96,7 +96,6 @@ function Problems() {
                   <TableCell>Acceptance</TableCell>
                   <TableCell>Difficulty</TableCell>
                   <TableCell>Frequency</TableCell>
-                  <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -143,29 +142,6 @@ function Problems() {
                         </TableCell>
                         <TableCell>
                           <SyncLockIcon />
-                        </TableCell>
-
-                        <TableCell>
-                          <Box display="flex" flexDirection="row" gap="10px">
-                            {userData?.role === "admin" && (
-                              <Link
-                                component={CombinedLink}
-                                to={row?.edit}
-                                variant="body2"
-                              >
-                                <EditIcon style={{ color: "green" }} />
-                              </Link>
-                            )}
-                            {userData?.role === "admin" && (
-                              <Link
-                                component={CombinedLink}
-                                to={row?.delete}
-                                variant="body2"
-                              >
-                                <DeleteIcon style={{ color: "red" }} />
-                              </Link>
-                            )}
-                          </Box>
                         </TableCell>
                       </TableRow>
                     ))
