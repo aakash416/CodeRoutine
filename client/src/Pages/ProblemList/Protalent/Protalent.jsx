@@ -15,7 +15,7 @@ function Protalent() {
       link: "/problems/protalent",
     },
     {
-      name: "AllProblems",
+      name: "All Problems",
       icon: <WorkIcon />,
       link: "/problems/protalent/all-problems",
     },
