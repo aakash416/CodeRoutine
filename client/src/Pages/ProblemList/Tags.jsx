@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"; // Icon for view more
 import ExpandLessIcon from "@mui/icons-material/ExpandLess"; // Icon for view less
 
-const Tags = ({ questions }) => {
+const Tags = ({ questions, onTagClick, selectedTags }) => {
   const [expanded, setExpanded] = useState(false); // State to track expanded view
 
   const tagCountMap = questions?.reduce((acc, question) => {
@@ -43,7 +43,9 @@ const Tags = ({ questions }) => {
             <Chip
               key={tag}
               label={`${capitalizeWords(tag)} (${count})`}
-              variant="outlined"
+              variant={selectedTags.includes(tag) ? "filled" : "outlined"}
+              color={selectedTags.includes(tag) ? "primary" : "default"}
+              onClick={() => onTagClick(tag)}
             />
           ))}
       </Box>

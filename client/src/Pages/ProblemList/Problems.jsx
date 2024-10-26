@@ -30,6 +30,8 @@ function Problems() {
   const [orderBy, setOrderBy] = useState("title");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const { userData } = ContextStore();
 
   const dispatch = useDispatch();
@@ -42,14 +44,32 @@ function Problems() {
     dispatch(fetchProblems());
   }, [dispatch]);
 
+  const handleTagClick = (tag) => {
+    setSelectedTags((prevSelectedTags) => {
+      if (prevSelectedTags.includes(tag)) {
+        return prevSelectedTags.filter((selectedTag) => selectedTag !== tag);
+      } else {
+        return [...prevSelectedTags, tag];
+      }
+    });
+    setPage(0);
+  };
+
+  useEffect(() => {
+    setFilteredQuestions(questions);
+    if (selectedTags.length === 0) {
+      setFilteredQuestions(questions);
+    } else {
+      const filtered = questions.filter((question) =>
+        selectedTags.some((tag) => question.tags.includes(tag))
+      );
+      setFilteredQuestions(filtered);
+    }
+  }, [selectedTags, questions]);
+
   const handleChangePage = (_, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (e) =>
     setRowsPerPage(parseInt(e.target.value, 10));
-
-  const emptyRows = Math.max(
-    0,
-    (1 + page) * rowsPerPage - (questions?.length || 0)
-  );
 
   const SkeletonTable = () =>
     Array.from({ length: rowsPerPage }).map((_, index) => (
@@ -77,7 +97,11 @@ function Problems() {
       )}
       <Courses />
       <LearningPlan />
-      <Tags questions={questions} />
+      <Tags
+        questions={questions}
+        onTagClick={handleTagClick}
+        selectedTags={selectedTags}
+      />
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 5 }}>
           <TableContainer>
@@ -96,7 +120,7 @@ function Problems() {
                 {loading ? (
                   <SkeletonTable />
                 ) : (
-                  questions
+                  filteredQuestions
                     ?.slice(
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
@@ -140,23 +164,20 @@ function Problems() {
                       </TableRow>
                     ))
                 )}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={questions?.length || 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+          {filteredQuestions.length > 0 && (
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={filteredQuestions?.length || 0}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          )}
         </Paper>
       </Box>
     </Container>
