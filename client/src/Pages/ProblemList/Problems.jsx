@@ -21,8 +21,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { ContextStore } from "../../Context/ContextStore";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import SyncLockIcon from "@mui/icons-material/SyncLock";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import Courses from "./Courses";
 import LearningPlan from "./LearningPlan";
 import Tags from "./Tags";
@@ -43,10 +41,6 @@ function Problems() {
     document.title = "CodeRoutine | Problems";
     dispatch(fetchProblems());
   }, [dispatch]);
-
-  const CombinedLink = React.forwardRef(function CombinedLink(props, ref) {
-    return <RouterLink ref={ref} {...props} />;
-  });
 
   const handleChangePage = (_, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (e) =>
@@ -96,7 +90,6 @@ function Problems() {
                   <TableCell>Acceptance</TableCell>
                   <TableCell>Difficulty</TableCell>
                   <TableCell>Frequency</TableCell>
-                  <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -143,29 +136,6 @@ function Problems() {
                         </TableCell>
                         <TableCell>
                           <SyncLockIcon />
-                        </TableCell>
-
-                        <TableCell>
-                          <Box display="flex" flexDirection="row" gap="10px">
-                            {userData?.role === "admin" && (
-                              <Link
-                                component={CombinedLink}
-                                to={row?.edit}
-                                variant="body2"
-                              >
-                                <EditIcon style={{ color: "green" }} />
-                              </Link>
-                            )}
-                            {userData?.role === "admin" && (
-                              <Link
-                                component={CombinedLink}
-                                to={row?.delete}
-                                variant="body2"
-                              >
-                                <DeleteIcon style={{ color: "red" }} />
-                              </Link>
-                            )}
-                          </Box>
                         </TableCell>
                       </TableRow>
                     ))

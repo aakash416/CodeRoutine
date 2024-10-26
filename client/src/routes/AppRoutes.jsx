@@ -35,7 +35,7 @@ import AdminRoute from "../Config/AdminRoute";
 import CourseAdminRoute from "../Config/CourseAdminRoute";
 import InstructorSignup from "../Pages/Courses/Instructor/Pages/InstructorSignup";
 import AdminDasbhoard from "../Component/AppBar/AdminDasbhoard/AdminDasbhoard";
-
+import LoginRoute from "../Config/LoginRoute";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -51,7 +51,14 @@ const AppRoutes = () => {
         }
       />
       <Route path="/problems/:id" element={<Problem />} />
-      <Route path="/login" element={<SignIn />} />
+      <Route
+        path="/login"
+        element={
+          <LoginRoute>
+            <SignIn />
+          </LoginRoute>
+        }
+      />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/profile/:id" element={<Profile />} />
       <Route path="/profile/resume/:id" element={<Resume />} />
