@@ -34,7 +34,7 @@ import Protalent from "../Pages/ProblemList/Protalent/Protalent";
 import AdminRoute from "../Config/AdminRoute";
 import CourseAdminRoute from "../Config/CourseAdminRoute";
 import InstructorSignup from "../Pages/Courses/Instructor/Pages/InstructorSignup";
-import AdminDasbhoard from "../Component/AppBar/AdminDasbhoard";
+import AdminDasbhoard from "../Component/AppBar/AdminDasbhoard/AdminDasbhoard";
 
 const AppRoutes = () => {
   return (
@@ -92,7 +92,7 @@ const AppRoutes = () => {
       <Route path="/progress" element={<ProgressPage />} />
       <Route path="/courses/instructor/signup" element={<InstructorSignup />} />
       <Route
-        path="/admin-dashboard"
+        path="/admin-dashboard/*"
         element={
           <AdminRoute>
             <AdminDasbhoard />
