@@ -11,6 +11,7 @@ import ru from "javascript-time-ago/locale/ru";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import CopyRight from "./Component/CopyRight/CopyRight";
 import AppRoutes from "./routes/AppRoutes";
+import ScrollToTop from "./Component/ScrollToTop";
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
@@ -22,6 +23,7 @@ const App = () => {
         <BrowserRouter>
           <NavBar />
           <ToastContainer position="top-right" theme="light" />
+          <ScrollToTop />
           <AppRoutes />
           <CopyRight />
         </BrowserRouter>
