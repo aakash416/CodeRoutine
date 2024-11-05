@@ -36,6 +36,7 @@ import CourseAdminRoute from "../Config/CourseAdminRoute";
 import InstructorSignup from "../Pages/Courses/Instructor/Pages/InstructorSignup";
 import AdminDasbhoard from "../Component/AppBar/AdminDasbhoard/AdminDasbhoard";
 import LoginRoute from "../Config/LoginRoute";
+import JobsSignup from "../Pages/Jobs/HireTalent/component/JobsSignup";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -79,6 +80,7 @@ const AppRoutes = () => {
       />
       <Route path="/jobs/:id" element={<JobsDetails />} />
       <Route path="/job/edit/:id" element={<EditJob />} />
+      <Route path="/jobs/signup" element={<JobsSignup />} />
       <Route path="/store/redeem" element={<Redeem />} />
       <Route path="/store/premium" element={<Premium />} />
       <Route path="/discuss" element={<Discuss />} />
