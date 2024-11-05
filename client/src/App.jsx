@@ -12,6 +12,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import CopyRight from "./Component/CopyRight/CopyRight";
 import AppRoutes from "./routes/AppRoutes";
 import ScrollToTop from "./Component/ScrollToTop";
+import ScrollToTopButton from "./Component/ScrollToTopButton";
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
@@ -24,6 +25,7 @@ const App = () => {
           <NavBar />
           <ToastContainer position="top-right" theme="light" />
           <ScrollToTop />
+          <ScrollToTopButton />
           <AppRoutes />
           <CopyRight />
         </BrowserRouter>
