@@ -17,6 +17,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import codeRoutineLogo from "../../assets/logo.png";
 import { Avatar, Skeleton } from "@mui/material";
 import { registerUser } from "../../Api/userApi";
+import Loading from "./Loading";
 
 const defaultTheme = createTheme();
 
@@ -88,7 +89,8 @@ export default function SignUp() {
   };
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs" sx={{ minHeight:"100vh" }}>
+      {isLoading && <Loading />}
+      <Container component="main" maxWidth="xs" sx={{ minHeight: "100vh" }}>
         <CssBaseline />
         {isLoading ? (
           <SkeletonLoader />
