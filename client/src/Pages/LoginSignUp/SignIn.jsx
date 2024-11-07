@@ -21,6 +21,7 @@ import { ContextStore } from "../../Context/ContextStore";
 import CircularProgress from "@mui/material/CircularProgress";
 import { googleLogin, loginUser } from "../../Api/userApi";
 import { GoogleLogin } from "@react-oauth/google";
+import Loading from "./Loading";
 
 const defaultTheme = createTheme();
 
@@ -116,7 +117,8 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs" sx={{ minHeight:"100vh" }}>
+      {isLoading && <Loading />}
+      <Container component="main" maxWidth="xs" sx={{ minHeight: "100vh" }}>
         <CssBaseline />
         {isLoading ? (
           <SkeletonLoader />
