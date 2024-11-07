@@ -30,6 +30,7 @@ import JobCard from "./JobCard";
 import { Link } from "react-router-dom";
 import { fetchJobs } from "../../features/jobs/jobActions";
 import Error from "../../Component/Error";
+import { ContextStore } from "../../Context/ContextStore";
 
 const Jobs = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const Jobs = () => {
   const error = useSelector(selectError);
   const filters = useSelector(selectFilters);
   const selectedTab = useSelector(selectSelectedTab);
+  const { userData } = ContextStore();
 
   const salaryValues = jobs
     .map((job) => parseFloat(job.salary))
@@ -286,7 +288,7 @@ const Jobs = () => {
             variant="contained"
             color="primary"
             component={Link}
-            to={"/jobs/hiretalent"}
+            to={userData.role === "admin" ? "/jobs/hiretalent" : "/jobs/signup"}
             sx={{ marginBottom: 2 }}
           >
             Hire Talent
