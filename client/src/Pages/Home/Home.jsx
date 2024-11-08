@@ -38,7 +38,7 @@ function Home() {
   };
 
   return (
-    <Box sx={{ minHeight:"100vh" }}>
+    <Box sx={{ minHeight: "100vh" }}>
       <CssBaseline />
       <main>
         <Box
@@ -67,9 +67,9 @@ function Home() {
                 variant="contained"
                 color="primary"
                 component={RouterLink}
-                to={!userData ? "/signup" : "/explore"}
+                to={!userData ? "/login" : "/explore"}
               >
-                {!userData ? "Sign Up" : "Explore"}
+                {!userData ? "Sign In" : "Explore"}
               </Button>
               <Button
                 variant="outlined"
