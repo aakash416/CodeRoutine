@@ -288,7 +288,7 @@ const Jobs = () => {
             variant="contained"
             color="primary"
             component={Link}
-            to={userData.role === "admin" ? "/jobs/hiretalent" : "/jobs/signup"}
+            to={userData?.role === "admin" ? "/jobs/hiretalent" : "/jobs/signup"}
             sx={{ marginBottom: 2 }}
           >
             Hire Talent
