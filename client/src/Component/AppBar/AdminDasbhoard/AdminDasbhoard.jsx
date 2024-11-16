@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import TaskSharpIcon from "@mui/icons-material/TaskSharp";
 import SideNavbar from "../../Shared/SideNavbar";
@@ -18,6 +18,7 @@ import MenuBookSharpIcon from "@mui/icons-material/MenuBookSharp";
 import CalculateSharpIcon from "@mui/icons-material/CalculateSharp";
 
 function AdminDasbhoard() {
+  const location = useLocation();
   const sideMenu = [
     {
       name: "Home",
@@ -54,7 +55,7 @@ function AdminDasbhoard() {
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
       {/* Sidebar */}
-      <SideNavbar sideMenu={sideMenu} />
+      <SideNavbar sideMenu={sideMenu} currentPath={location.pathname} />
 
       {/* Main Content Area */}
       <Box
