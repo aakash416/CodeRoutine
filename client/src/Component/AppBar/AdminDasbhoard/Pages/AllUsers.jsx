@@ -30,7 +30,7 @@ function AllUsers() {
       username: "John Doe",
       email: "johndoe@example.com",
       avatar: "https://i.pravatar.cc/150?img=1",
-      status: "Pending",
+      status: "Active",
       comment: "",
     },
     {
@@ -38,7 +38,7 @@ function AllUsers() {
       username: "Jane Smith",
       email: "janesmith@example.com",
       avatar: "https://i.pravatar.cc/150?img=2",
-      status: "Pending",
+      status: "Active",
       comment: "",
     },
     {
@@ -46,7 +46,7 @@ function AllUsers() {
       username: "Doe John",
       email: "doejohn@example.com",
       avatar: "https://i.pravatar.cc/150?img=3",
-      status: "Pending",
+      status: "Active",
       comment: "",
     },
     {
@@ -54,7 +54,7 @@ function AllUsers() {
       username: "Smith Jane",
       email: "smithjane@example.com",
       avatar: "https://i.pravatar.cc/150?img=4",
-      status: "Pending",
+      status: "Active",
       comment: "",
     },
   ]);
@@ -103,7 +103,9 @@ function AllUsers() {
               <TableCell>Email</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Action</TableCell>
-              <TableCell>Comments</TableCell>
+              {users.some(
+                (user) => user.status === "Banned" || user.status === "Deleted"
+              ) && <TableCell>Comments</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -121,9 +123,9 @@ function AllUsers() {
                     variant="body2"
                     sx={{
                       color:
-                        user.status === "Approved"
+                        user.status === "Active"
                           ? "green"
-                          : user.status === "Pending"
+                          : user.status === "Deactivated"
                           ? "orange"
                           : "red",
                     }}
@@ -138,11 +140,13 @@ function AllUsers() {
                     </Button>
                   </Box>
                 </TableCell>
-                <TableCell>
-                  <Typography variant="body2">
-                    {user.comment ? user.comment : "No Comments yet!"}
-                  </Typography>
-                </TableCell>
+                {(user?.status === "Banned" || user?.status === "Deleted") && (
+                  <TableCell>
+                    <Typography variant="body2">
+                      {user?.comment ? user?.comment : "No Comments yet!"}
+                    </Typography>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>
@@ -152,49 +156,56 @@ function AllUsers() {
       <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="sm">
         <DialogTitle>Actions</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            <Box display="flex" gap={2} mb={2}>
-              <Button
-                variant="contained"
-                color="success"
-                size="small"
-                onClick={() => handleStatusChange("Approved")}
-                disabled={selectedUser?.status === "Approved"}
-              >
-                Approve
-              </Button>
-              <Button
-                variant="contained"
-                color="warning"
-                size="small"
-                onClick={() => handleStatusChange("Pending")}
-                disabled={selectedUser?.status === "Pending"}
-              >
-                Pending
-              </Button>
-              <Button
-                variant="contained"
-                color="error"
-                size="small"
-                onClick={() => handleStatusChange("Rejected")}
-                disabled={selectedUser?.status === "Rejected"}
-              >
-                Reject
-              </Button>
-            </Box>
-            <TextField
-              autoFocus
-              required
-              margin="dense"
-              id="comment"
-              label="Comment"
-              type="text"
-              fullWidth
-              variant="outlined"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </DialogContentText>
+          <Box display="flex" gap={2} mb={2}>
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              onClick={() => handleStatusChange("Active")}
+              disabled={selectedUser?.status === "Active"}
+            >
+              Active
+            </Button>
+            <Button
+              variant="contained"
+              color="warning"
+              size="small"
+              onClick={() => handleStatusChange("Deactivated")}
+              disabled={selectedUser?.status === "Deactivated"}
+            >
+              Deactivated
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              onClick={() => handleStatusChange("Deleted")}
+              disabled={selectedUser?.status === "Deleted"}
+            >
+              Deleted
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              onClick={() => handleStatusChange("Banned")}
+              disabled={selectedUser?.status === "Banned"}
+            >
+              Banned
+            </Button>
+          </Box>
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="comment"
+            label="Comment"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" onClick={handleClose}>
