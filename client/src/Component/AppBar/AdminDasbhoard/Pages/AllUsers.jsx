@@ -196,7 +196,6 @@ function AllUsers() {
           </Box>
           <TextField
             autoFocus
-            required
             margin="dense"
             id="comment"
             label="Comment"

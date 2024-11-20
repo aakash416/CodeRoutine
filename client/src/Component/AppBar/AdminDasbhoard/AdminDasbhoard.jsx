@@ -9,7 +9,7 @@ import AllUsers from "./Pages/AllUsers";
 import CourseAdmin from "./Pages/CourseAdmin";
 import JobAdmin from "./Pages/JobAdmin";
 import ProblemAdmin from "./Pages/ProblemAdmin";
-import Tasks from "./Pages/Tasks";
+import Tasks from "./Pages/Tasks/Tasks";
 import Home from "./Pages/Home";
 import HomeSharpIcon from "@mui/icons-material/HomeSharp";
 import AssignmentSharpIcon from "@mui/icons-material/AssignmentSharp";
