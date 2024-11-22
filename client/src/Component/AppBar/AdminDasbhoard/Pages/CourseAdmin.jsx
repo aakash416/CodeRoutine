@@ -92,9 +92,6 @@ function CourseAdmin() {
 
   return (
     <Box m={5}>
-      <Typography variant="h4" gutterBottom>
-        Course Admins
-      </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

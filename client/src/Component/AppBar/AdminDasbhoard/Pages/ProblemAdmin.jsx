@@ -92,9 +92,6 @@ function ProblemAdmin() {
 
   return (
     <Box m={5}>
-      <Typography variant="h4" gutterBottom>
-        Problem Admins
-      </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

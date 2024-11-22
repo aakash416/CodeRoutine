@@ -92,9 +92,6 @@ function JobAdmin() {
 
   return (
     <Box m={5}>
-      <Typography variant="h4" gutterBottom>
-        Job Admins
-      </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
