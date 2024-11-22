@@ -92,9 +92,6 @@ function AllUsers() {
 
   return (
     <Box m={5}>
-      <Typography variant="h4" gutterBottom>
-        All Users
-      </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

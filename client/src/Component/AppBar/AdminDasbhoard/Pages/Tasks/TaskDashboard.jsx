@@ -12,14 +12,21 @@ import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 const TaskDashboard = ({ tasks }) => {
   const [month, setMonth] = useState(10);
   const [year, setYear] = useState(2024);
+
   const handleMonthChangeLeft = () => {
-    setMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth - 1)); // Go to previous month
-    if (month === 0) setYear((prevYear) => prevYear - 1); // Change year when reaching January
+    setMonth((prevMonth) => {
+      const newMonth = prevMonth === 0 ? 11 : prevMonth - 1;
+      if (prevMonth === 0) setYear((prevYear) => prevYear - 1);
+      return newMonth;
+    });
   };
 
   const handleMonthChangeRight = () => {
-    setMonth((prevMonth) => (prevMonth === 11 ? 0 : prevMonth + 1)); // Go to next month
-    if (month === 11) setYear((prevYear) => prevYear + 1); // Change year when reaching December
+    setMonth((prevMonth) => {
+      const newMonth = prevMonth === 11 ? 0 : prevMonth + 1;
+      if (prevMonth === 11) setYear((prevYear) => prevYear + 1);
+      return newMonth;
+    });
   };
 
   return (
@@ -46,47 +53,41 @@ const TaskDashboard = ({ tasks }) => {
         </IconButton>
       </Box>
       <Grid container spacing={3} sx={{ marginTop: 4 }}>
-        {["todo", "inProgress", "completed"].map((status) => (
-          <Grid item xs={12} md={4} key={status}>
-            <Typography
-              variant="h6"
-              sx={{
-                textAlign: "center",
-                padding: 1,
-                borderRadius: 1,
-                backgroundColor: "#1976d2",
-                color: "#fff",
-              }}
-            >
-              {status.charAt(0).toUpperCase() + status.slice(1)} (
-              {
-                tasks.filter(
-                  (task) =>
-                    task.status === status &&
-                    new Date(task.date).getMonth() === month &&
-                    new Date(task.date).getFullYear() === year
-                ).length
-              }
-              )
-            </Typography>
-            <Box
-              sx={{
-                backgroundColor: "#fff",
-                padding: 2,
-                borderRadius: 1,
-                minHeight: "100px",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-                overflowY: "auto",
-              }}
-            >
-              {tasks
-                .filter(
-                  (task) =>
-                    task.status === status &&
-                    new Date(task.date).getMonth() === month &&
-                    new Date(task.date).getFullYear() === year
-                )
-                .map((task) => (
+        {["todo", "inProgress", "completed"].map((status) => {
+          const filteredTasks = tasks.filter(
+            (task) =>
+              task.status === status &&
+              new Date(task.date).getMonth() === month &&
+              new Date(task.date).getFullYear() === year
+          );
+          const taskCount = filteredTasks.length;
+
+          return (
+            <Grid item xs={12} md={4} key={status}>
+              <Typography
+                variant="h6"
+                sx={{
+                  textAlign: "center",
+                  padding: 1,
+                  borderRadius: 1,
+                  backgroundColor: "#1976d2",
+                  color: "#fff",
+                }}
+              >
+                {status.charAt(0).toUpperCase() + status.slice(1)}
+                {taskCount > 0 && ` (${taskCount})`}
+              </Typography>
+              <Box
+                sx={{
+                  backgroundColor: "#fff",
+                  padding: 2,
+                  borderRadius: 1,
+                  minHeight: "100px",
+                  boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+                  overflowY: "auto",
+                }}
+              >
+                {filteredTasks.map((task) => (
                   <Card
                     key={task.id}
                     sx={{
@@ -113,9 +114,10 @@ const TaskDashboard = ({ tasks }) => {
                     </CardContent>
                   </Card>
                 ))}
-            </Box>
-          </Grid>
-        ))}
+              </Box>
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );
