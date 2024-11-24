@@ -3,13 +3,14 @@ import { Box } from "@mui/material";
 import Dashboard from "./pages/Dashboard";
 import VirtualHiring from "./pages/VirtualHiring";
 import CampusHiring from "./pages/CampusHiring";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import SideNavbar from "../../../Component/Shared/SideNavbar";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import WorkIcon from "@mui/icons-material/Work";
 import SchoolIcon from "@mui/icons-material/School";
 
 function Hiretalent() {
+  const location = useLocation();
   const sideMenu = [
     {
       name: "Home",
@@ -31,7 +32,7 @@ function Hiretalent() {
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
       {/* Sidebar */}
-      <SideNavbar sideMenu={sideMenu} />
+      <SideNavbar sideMenu={sideMenu} currentPath={location.pathname} />
 
       {/* Main Content Area */}
       <Box
