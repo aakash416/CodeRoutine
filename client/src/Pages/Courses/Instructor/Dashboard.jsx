@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./Pages/Home";
 import Courses from "./Pages/Courses";
 import Tasks from "./Pages/Tasks";
@@ -11,6 +11,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import HomeIcon from "@mui/icons-material/Home";
 
 const Dashboard = () => {
+  const location = useLocation();
   const sideMenu = [
     {
       name: "Home",
@@ -35,7 +36,7 @@ const Dashboard = () => {
   ];
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
-      <SideNavbar sideMenu={sideMenu} />
+      <SideNavbar sideMenu={sideMenu} currentPath={location.pathname}/>
       <Box
         component="main"
         sx={{
