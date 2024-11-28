@@ -81,17 +81,15 @@ function AllJobs() {
     ));
   return (
     <Box>
+      <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
+        All Jobs
+      </Typography>
       <TableContainer
         component={Paper}
         sx={{
-          padding: 2,
           marginBottom: 2,
         }}
       >
-        <Typography variant="body1" sx={{ color: "blue" }}>
-          All Jobs
-        </Typography>
-
         <Table sx={{ minWidth: 650 }} aria-label="job table">
           <TableHead>
             <TableRow>
