@@ -8,6 +8,10 @@ import SideNavbar from "../../../Component/Shared/SideNavbar";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import WorkIcon from "@mui/icons-material/Work";
 import SchoolIcon from "@mui/icons-material/School";
+import Schedule from "./pages/Schedule";
+import { AddBox, HelpOutline } from "@mui/icons-material";
+import HelpCenter from "./pages/HelpCenter";
+import AddNewTest from "./pages/AddNewTest";
 
 function Hiretalent() {
   const location = useLocation();
@@ -23,9 +27,24 @@ function Hiretalent() {
       link: "/jobs/hiretalent/virtual-hiring",
     },
     {
+      name: "Campus Hiring",
+      icon: <WorkIcon />,
+      link: "/jobs/hiretalent/campus-hiring",
+    },
+    {
       name: "Schedule",
       icon: <SchoolIcon />,
-      link: "/jobs/hiretalent/campus-hiring",
+      link: "/jobs/hiretalent/schedule",
+    },
+    {
+      name: "Add New Test",
+      icon: <AddBox />,
+      link: "/jobs/hiretalent/add-new-test",
+    },
+    {
+      name: "Help Center",
+      icon: <HelpOutline />,
+      link: "/jobs/hiretalent/help-center",
     },
   ];
 
@@ -48,7 +67,10 @@ function Hiretalent() {
           {/* Base Dashboard Route */}
           <Route path="/" element={<Dashboard />} />
           <Route path="virtual-hiring" element={<VirtualHiring />} />
+          <Route path="schedule" element={<Schedule />} />
           <Route path="campus-hiring" element={<CampusHiring />} />
+          <Route path="add-new-test" element={<AddNewTest />} />
+          <Route path="help-center" element={<HelpCenter />} />
         </Routes>
       </Box>
     </Box>

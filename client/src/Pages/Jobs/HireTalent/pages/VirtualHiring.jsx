@@ -208,20 +208,6 @@ function VirtualHiring() {
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} sm={6} md={3}>
             <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              startIcon={<AddBox />}
-              sx={{
-                py: 2,
-                fontSize: "16px",
-              }}
-            >
-              Add New Test
-            </Button>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Button
               variant="outlined"
               color="primary"
               fullWidth
@@ -246,20 +232,6 @@ function VirtualHiring() {
               }}
             >
               Generate Report
-            </Button>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Button
-              variant="text"
-              color="primary"
-              fullWidth
-              startIcon={<HelpOutline />}
-              sx={{
-                py: 2,
-                fontSize: "16px",
-              }}
-            >
-              Help Center
             </Button>
           </Grid>
         </Grid>
