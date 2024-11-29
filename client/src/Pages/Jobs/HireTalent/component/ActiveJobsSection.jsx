@@ -1,6 +1,6 @@
 // ActiveJobsSection.js
 import React, { useMemo } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import WorkIcon from "@mui/icons-material/Work";
 import EventBusyIcon from "@mui/icons-material/EventBusy";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -77,13 +77,18 @@ function ActiveJobsSection() {
   ];
 
   return (
-    <Box
-      display="flex"
-      gap={2}
+    <Paper
+      p={2}
+      elevation={3}
       flexDirection={{ xs: "column", sm: "row" }}
-      justifyContent="space-around"
-      alignItems="center"
-      sx={{ backgroundColor: "lightgray", padding: 2 }}
+      sx={{
+        display: "flex",
+        justifyContent: "space-around",
+        gap: 2,
+        border: "1px solid #f0f0f0", // Light background for contrast
+        padding: 2,
+        alignItems: "center",
+      }}
       borderRadius="20px"
     >
       {jobStatuses.map((status, index) => (
@@ -95,7 +100,7 @@ function ActiveJobsSection() {
           Icon={status.Icon}
         />
       ))}
-    </Box>
+    </Paper>
   );
 }
 

@@ -7,7 +7,12 @@ import AllJobs from "../component/AllJobs";
 
 function Dashboard() {
   return (
-    <Box display={"flex"} flexDirection={"column"} gap={2} p={3}>
+    <Box
+      display={"flex"}
+      flexDirection={"column"}
+      gap={2}
+      sx={{ minHeight: "100vh", p: 4 }}
+    >
       <Welcome />
       <ActiveJobsSection />
       <AllJobs />
