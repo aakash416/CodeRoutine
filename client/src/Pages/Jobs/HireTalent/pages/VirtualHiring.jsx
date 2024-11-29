@@ -203,39 +203,6 @@ function VirtualHiring() {
           </Card>
         </Grid>
       </Grid>
-
-      <Box sx={{ mt: 5, textAlign: "center" }}>
-        <Grid container spacing={3} justifyContent="center">
-          <Grid item xs={12} sm={6} md={3}>
-            <Button
-              variant="outlined"
-              color="primary"
-              fullWidth
-              startIcon={<People />}
-              sx={{
-                py: 2,
-                fontSize: "16px",
-              }}
-            >
-              Manage Candidates
-            </Button>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Button
-              variant="contained"
-              color="secondary"
-              fullWidth
-              startIcon={<Assessment />}
-              sx={{
-                py: 2,
-                fontSize: "16px",
-              }}
-            >
-              Generate Report
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
     </Box>
   );
 }
