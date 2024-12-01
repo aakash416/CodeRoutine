@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -11,6 +11,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Checkbox,
 } from "@mui/material";
 import {
   TrendingUp,
@@ -24,6 +25,21 @@ import {
 } from "@mui/icons-material";
 
 function VirtualHiring() {
+  const [tasks, setTasks] = useState([
+    { id: 1, text: "Review Test Results", completed: true },
+    { id: 2, text: "Send Exam Invitation Mails", completed: false },
+    { id: 3, text: "Send Mails to Selected Candidates", completed: false },
+    { id: 4, text: "Send Interview to Selected Candidates", completed: false },
+  ]);
+
+  const taskComplete = (id) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
   return (
     <Box sx={{ minHeight: "100vh", p: 4 }}>
       <Paper
@@ -148,7 +164,7 @@ function VirtualHiring() {
 
       <Grid container spacing={4} sx={{ mt: 5 }}>
         <Grid item xs={12} md={6}>
-          <Card sx={{ boxShadow: 3, p: 3 }}>
+          <Card sx={{ boxShadow: 3, p: 3, minHeight: "250px" }}>
             <Typography variant="h6" color="primary" fontWeight="bold">
               Upcoming Tests & Events
             </Typography>
@@ -176,29 +192,32 @@ function VirtualHiring() {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Card sx={{ boxShadow: 3, p: 3 }}>
+          <Card sx={{ boxShadow: 3, p: 3, minHeight: "250px" }}>
             <Typography variant="h6" color="primary" fontWeight="bold">
-              Pending Tasks
+              Task List
             </Typography>
-            <List>
-              <ListItem>
-                <ListItemIcon>
-                  <CheckCircle color="success" />
-                </ListItemIcon>
-                <ListItemText primary="Review Test Results" />
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <CheckCircle color="success" />
-                </ListItemIcon>
-                <ListItemText primary="Send Exam Invitation Mails" />
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <CheckCircle color="success" />
-                </ListItemIcon>
-                <ListItemText primary="Send Mails to Selected Candidates" />
-              </ListItem>
+            <List gap={3}>
+              {tasks.map((task) => (
+                <Box
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  key={task.id}
+                >
+                  <Checkbox
+                    checked={task.completed}
+                    onChange={() => taskComplete(task.id)}
+                    color="primary"
+                  />
+                  <ListItemText
+                    primary={task.text}
+                    sx={{
+                      textDecoration: task.completed ? "line-through" : "none",
+                      color: task.completed ? "gray" : "inherit",
+                    }}
+                  />
+                </Box>
+              ))}
             </List>
           </Card>
         </Grid>
