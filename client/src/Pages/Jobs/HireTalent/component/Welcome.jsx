@@ -1,4 +1,3 @@
-// WelcomeBox.js
 import React from "react";
 import { Avatar, Box, Button, Paper, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,6 +10,7 @@ function Welcome() {
 
   const buttonStyle = {
     borderRadius: "40px",
+    whiteSpace: "nowrap",
     mt: { xs: 2, sm: 0 },
   };
 
@@ -31,14 +31,15 @@ function Welcome() {
         alignItems="center"
         sx={{
           padding: 2,
+          gap: 2,
         }}
         borderRadius="20px"
       >
-        <Box display="flex" gap={2} alignItems="center">
+        <Box display="flex" gap={2} alignItems="center" flexShrink={1}>
           <Avatar
             alt={userData?.userName}
             src={getCuteAvatar(userData?.userName)}
-            onClick={() => navigate(`/profile/${userName}`)}
+            onClick={() => navigate(`/profile/${userData?.userName}`)}
             sx={{
               width: 50,
               height: 50,
@@ -50,21 +51,25 @@ function Welcome() {
             }}
           />
           <Box>
-            <Typography variant="h6" fontWeight="bold">Welcome {userData?.userName}</Typography>
+            <Typography variant="h6" fontWeight="bold">
+              Welcome {userData?.userName}
+            </Typography>
             <Typography variant="body2" sx={{ color: "red" }}>
               Your credentials are being reviewed by the Coderoutine Admin Team.
               The verification process usually takes up to two business days.
             </Typography>
           </Box>
         </Box>
-        <Button
-          variant="contained"
-          sx={buttonStyle}
-          component={Link}
-          to="/jobs/postjobs"
-        >
-          Post A Job
-        </Button>
+        <Box flexShrink={0}>
+          <Button
+            variant="contained"
+            sx={buttonStyle}
+            component={Link}
+            to="/jobs/postjobs"
+          >
+            Post A Job
+          </Button>
+        </Box>
       </Box>
     </Paper>
   );
