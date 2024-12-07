@@ -36,6 +36,8 @@ function ActiveJobsSection() {
   const totalJobsCount = jobs.length;
 
   const getIconStyle = (color) => ({
+    display: "flex",
+    justifyContent: "center",
     backgroundColor: color,
     padding: 2,
     borderRadius: "50%",
