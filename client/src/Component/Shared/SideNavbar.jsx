@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   List,
   ListItem,
@@ -8,9 +8,8 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-
+import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link } from "react-router-dom";
 
 const SideNavbar = ({ sideMenu }) => {
@@ -20,38 +19,40 @@ const SideNavbar = ({ sideMenu }) => {
     setOpen((prevOpen) => !prevOpen); // Toggle sidebar open/close state
   };
 
-  const handleResize = () => {
-    if (window.innerWidth <= 1024) {
-      setOpen(false); // Collapse sidebar if window width is less than 1024px
-    } else {
-      setOpen(true); // Expand sidebar if window width is 1024px or more
-    }
-  };
-
-  useEffect(() => {
-    handleResize(); // Check initial size on mount
-    window.addEventListener("resize", handleResize); // Add resize listener
-
-    return () => {
-      window.removeEventListener("resize", handleResize); // Cleanup listener on unmount
-    };
-  }, []);
-
   return (
     <Box
       sx={{
         width: open ? 240 : 60, // Adjust width based on sidebar state
-        height: "100vh",
         boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
         position: "sticky",
         left: 0,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
         transition: "width 0.3s ease", // Add smooth transition to width
       }}
     >
       {/* Collapsible List */}
+      <Box
+        sx={{
+          textAlign: "right",
+          bottom: 0, // Stick to the bottom
+          width: open ? 240 : 60,
+          transition: "width 0.3s ease", // Add smooth transition to width
+        }}
+      >
+        <Divider />
+
+        <IconButton
+          onClick={toggleSidebar}
+          aria-label={open ? "Close Sidebar" : "Open Sidebar"}
+        >
+          {open ? (
+            <ChevronLeftIcon sx={{ fontSize: "40px" }} />
+          ) : (
+            <MenuIcon sx={{ fontSize: "40px" }} />
+          )}
+        </IconButton>
+      </Box>
       <List>
         {sideMenu.map((item, index) => (
           <ListItem
@@ -81,28 +82,6 @@ const SideNavbar = ({ sideMenu }) => {
           </ListItem>
         ))}
       </List>
-      <Box
-        sx={{
-          textAlign: "right",
-          position: "sticky", // Fix the position
-          bottom: 0, // Stick to the bottom
-          width: open ? 240 : 60,
-          transition: "width 0.3s ease", // Add smooth transition to width
-        }}
-      >
-        <Divider />
-
-        <IconButton
-          onClick={toggleSidebar}
-          aria-label={open ? "Close Sidebar" : "Open Sidebar"}
-        >
-          {open ? (
-            <ChevronLeftIcon sx={{ fontSize: "40px" }} />
-          ) : (
-            <ChevronRightIcon sx={{ fontSize: "40px" }} />
-          )}
-        </IconButton>
-      </Box>
     </Box>
   );
 };

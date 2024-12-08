@@ -67,7 +67,7 @@ function Hiretalent() {
   ];
 
   return (
-    <Box sx={{ display: "flex", height: "100vh" }}>
+    <Box sx={{ display: "flex" }}>
       {/* Sidebar */}
       <SideNavbar sideMenu={sideMenu} currentPath={location.pathname} />
 
