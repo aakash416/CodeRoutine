@@ -141,7 +141,9 @@ function AllJobs() {
                     <TableCell>{job.company}</TableCell>
                     <TableCell>₹{job.salary}</TableCell>
                     <TableCell>{job.location}</TableCell>
-                    <TableCell>{job.jobLevel}</TableCell>
+                    <TableCell sx={{ whiteSpace: "nowrap" }}>
+                      {job.jobLevel}
+                    </TableCell>
                     <TableCell>
                       <Box
                         display="flex"
