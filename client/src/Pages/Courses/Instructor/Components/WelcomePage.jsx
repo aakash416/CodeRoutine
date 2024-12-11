@@ -15,10 +15,7 @@ const WelcomePage = () => {
   const buttonStyle = {
     borderRadius: "40px",
     mt: { xs: 2, sm: 0 },
-    backgroundColor: "#007bff", // Primary color
-    "&:hover": {
-      backgroundColor: "#0056b3", // Darker shade for hover effect
-    },
+    whiteSpace: "nowrap",
   };
 
   return (
